@@ -32,5 +32,15 @@ public class ItemBuildCommand extends Registerable {
 		this.itemContainer.setBuilding(p, item);
 		lib.getContainerAPI().openFor(p, ItemBuildContainer.class);
 	}
+	
+	@SubcommandInfo(subcommand = "return", permission = "itembuilder.build")
+	public void onReturn(Player p) {
+		ItemStack item = this.itemContainer.getBuilding(p);
+		if (item == null || item.getType().equals(Material.AIR)) {
+			lib.getMessagesAPI().sendMessage("exception.not-building", p);
+			return;
+		}
+		lib.getContainerAPI().openFor(p, ItemBuildContainer.class);
+	}
 
 }
