@@ -4,3 +4,4 @@ messages:
     no-permission: "&cYou are not allowed to do that!"
     exception:
       no-item: "&cYou do not have an item in your main hand!"
+      not-building: "&cYou aren't building any items at the moment!"
