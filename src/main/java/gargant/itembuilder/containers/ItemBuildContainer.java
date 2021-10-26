@@ -1,16 +1,22 @@
 package gargant.itembuilder.containers;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import masecla.mlib.containers.generic.ImmutableContainer;
 import masecla.mlib.main.MLib;
+import net.md_5.bungee.api.ChatColor;
+import net.wesjd.anvilgui.AnvilGUI;
 
 public class ItemBuildContainer extends ImmutableContainer{
 
@@ -20,17 +26,56 @@ public class ItemBuildContainer extends ImmutableContainer{
 		this.building.put(p.getUniqueId(), s);
 	}
 	
+	public ItemStack getBuilding(Player p) {
+		return this.building.getOrDefault(p.getUniqueId(), null);
+	}
+	
 	public ItemBuildContainer(MLib lib) {
 		super(lib);
 	}
 
 	@Override
 	public void onTopClick(InventoryClickEvent ev) {
+		
+		Player p = (Player) ev.getWhoClicked();
+		
+		// Display Name Handling
+		if(ev.getSlot() == 11) {
+			new AnvilGUI.Builder().plugin(lib.getPlugin()).text("Enter new Display Name!").title("Display Name Editor")
+			.itemLeft(new ItemStack(Material.PAPER))
+			.onClose(c -> lib.getContainerAPI().openFor(c, ItemBuildContainer.class)).onComplete((c, r) -> {
+				ItemStack s = this.building.get(c.getUniqueId());
+				s.getItemMeta().setDisplayName(ChatColor.translateAlternateColorCodes('&', r));
+				return AnvilGUI.Response.close();
+			}).open(p);
+			return;
+		}
+		
 	}
 
 	@Override
 	public Inventory getInventory(Player p) {
-		return null;
+		ItemStack building = this.building.getOrDefault(p.getUniqueId(), null);
+		if(building == null) {
+			return Bukkit.createInventory(p, getSize(), ChatColor.RED + "NO ITEM BUILDING!");
+		}
+		
+		Inventory inv = Bukkit.createInventory(p, getSize(), ChatColor.YELLOW + "ItemBuilder+");
+		
+		inv.setItem(4, this.building.get(p.getUniqueId()));
+		
+		// Display name setting
+		inv.setItem(11, this.getDisplayName(p));
+		
+		// Lore shit
+		
+		// Amount
+		
+		// Change material
+		
+		// Add nbt
+		
+		return inv;
 	}
 
 	@Override
@@ -46,6 +91,19 @@ public class ItemBuildContainer extends ImmutableContainer{
 	@Override
 	public boolean requiresUpdating() {
 		return true;
+	}
+	
+	private ItemStack getDisplayName(Player p) {
+		ItemStack s = new ItemStack(Material.NAME_TAG);
+		ItemMeta m = s.getItemMeta();
+		
+		String displayName = this.building.get(p.getUniqueId()).getItemMeta().getDisplayName();
+		
+		m.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&eDisplay Name: &f" + displayName));
+		m.setLore(Arrays.asList("", ChatColor.GRAY + "- " + ChatColor.WHITE + "Click to change!"));
+		
+		s.setItemMeta(m);
+		return s;
 	}
 
 }
