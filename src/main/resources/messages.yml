@@ -1,0 +1,6 @@
+prefix: "&c&lItemBuilder+ "
+messages:
+  plugin:
+    no-permission: "&cYou are not allowed to do that!"
+    exception:
+      no-item: "&cYou do not have an item in your main hand!"
