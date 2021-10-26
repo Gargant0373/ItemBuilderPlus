@@ -1,0 +1,8 @@
+name: ItemBuilderPlus
+main: gargant.itembuilder.main.ItemBuilderPlus
+version: "1.0"
+author: Gargant
+commands:
+  item:
+    usage: "/item help"
+    description: "Main command for ItemBuilderPlus"
