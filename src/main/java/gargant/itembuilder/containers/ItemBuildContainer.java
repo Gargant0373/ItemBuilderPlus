@@ -36,8 +36,11 @@ public class ItemBuildContainer extends ImmutableContainer {
 
 	@Override
 	public void onTopClick(InventoryClickEvent ev) {
-
+		ev.setCancelled(true);
 		Player p = (Player) ev.getWhoClicked();
+		
+		if(this.building.getOrDefault(p.getUniqueId(), null) == null)
+			return;
 
 		// Display Name Handling
 		if (ev.getSlot() == 11) {
@@ -79,7 +82,14 @@ public class ItemBuildContainer extends ImmutableContainer {
 			lib.getContainerAPI().openFor(p, MaterialEditContainer.class);
 			return;
 		}
-
+		
+		// Finish handling
+		if(ev.getSlot() == 49) {
+			lib.getContainerAPI().closeFor(p);
+			p.getInventory().addItem(this.building.get(p.getUniqueId()));
+			return;
+		}
+		
 	}
 
 	@Override
@@ -106,6 +116,9 @@ public class ItemBuildContainer extends ImmutableContainer {
 
 		// Add nbt
 
+		// Finish button
+		inv.setItem(49, this.getFinish(p));
+		
 		return inv;
 	}
 
@@ -163,5 +176,14 @@ public class ItemBuildContainer extends ImmutableContainer {
 		s.setItemMeta(m);
 		return s;
 	}
-
+	
+	private ItemStack getFinish(Player p) {
+		ItemStack s = this.building.get(p.getUniqueId());
+		ItemMeta m = s.getItemMeta();
+		
+		m.setLore(Arrays.asList("", ChatColor.WHITE + "Click to get item!"));
+		
+		s.setItemMeta(m);
+		return s;
+	}
 }
