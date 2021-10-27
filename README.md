@@ -2,10 +2,10 @@
 This plugin is made to edit any data for any item fully in-game with almost no commands, just an easy-to-use GUI.
 
 # Commands
-/item <help> (itembuilder.help) - Command that shows help message.
-/item open <material> (itembuilder.build) - Command that opens GUI to build from a material.
-/item hand (itembuilder.build) - Command that opens GUI to build from hand.
-/item return (itembuilder.build) - Command that opens the GUI for the item you were previously building.
+- /item <help> (itembuilder.help) - Command that shows help message.
+- /item open <material> (itembuilder.build) - Command that opens GUI to build from a material.
+- /item hand (itembuilder.build) - Command that opens GUI to build from hand.
+- /item return (itembuilder.build) - Command that opens the GUI for the item you were previously building.
 
 # Building and contributing
 ### Building
