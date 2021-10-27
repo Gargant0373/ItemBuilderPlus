@@ -29,7 +29,7 @@ public class ItemBuildCommand extends Registerable {
 			lib.getMessagesAPI().sendMessage("exception.no-item", p);
 			return;
 		}
-		this.itemContainer.setBuilding(p, item);
+		this.itemContainer.setBuilding(p, item.clone());
 		lib.getContainerAPI().openFor(p, ItemBuildContainer.class);
 	}
 	
@@ -41,6 +41,11 @@ public class ItemBuildCommand extends Registerable {
 			return;
 		}
 		lib.getContainerAPI().openFor(p, ItemBuildContainer.class);
+	}
+	
+	@SubcommandInfo(subcommand = "previous", permission = "itembuilder.build")
+	public void onPrevious(Player p) {
+		this.onReturn(p);
 	}
 
 }
