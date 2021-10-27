@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import gargant.itembuilder.commands.ItemBuildCommand;
 import gargant.itembuilder.containers.ItemBuildContainer;
+import gargant.itembuilder.containers.MaterialEditContainer;
 import masecla.mlib.main.MLib;
 
 public class ItemBuilderPlus extends JavaPlugin{
@@ -18,6 +19,8 @@ public class ItemBuilderPlus extends JavaPlugin{
 		
 		this.itemContainer = new ItemBuildContainer(lib);
 		this.itemContainer.register();
+		
+		new MaterialEditContainer(lib, itemContainer).register();
 		
 		new ItemBuildCommand(lib, itemContainer).register();
 	}
