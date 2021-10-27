@@ -73,7 +73,7 @@ public class MaterialEditContainer extends ImmutableContainer {
 	}
 
 	private ItemStack getPane(int slot) {
-		ItemStack s = new ItemStack(Material.STAINED_GLASS_PANE, (byte) 15);
+		ItemStack s = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
 		ItemMeta m = s.getItemMeta();
 
 		m.setDisplayName(ChatColor.WHITE + this.buildArrows(slot));
