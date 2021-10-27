@@ -5,3 +5,4 @@ messages:
     exception:
       no-item: "&cYou do not have an item in your main hand!"
       not-building: "&cYou aren't building any items at the moment!"
+      invalid-material: "&c%material% is not a material!"
